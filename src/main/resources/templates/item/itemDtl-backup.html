@@ -245,6 +245,19 @@
             width: 50%;
         }
 
+        /*현석 파트 시작*/
+        /*달력 내용 추가한 시작 부분*/
+       #calendar-widget {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 9999;
+        }
+        /*달력 내용 추가한 끝 부분*/
+        /*현석 파트 끝*/
 
     </style>
 
@@ -253,100 +266,41 @@
 <div layout:fragment="content">
     <div class="inner-cont">
     <input type="hidden" id="itemId" th:value="${item.id}">
-        <!-- 상단 : 클래스 대표 이미지 및 서브 이미지 -->
-        <div class="img-grid">
-            <!--<div class="grid-item">
-                <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}">
-                <img th:if="${#strings.isEmpty(itemImg.imgUrl)}" src="/images/noimg.jpg">
-                &lt;!&ndash; 세 개의 이미지만 표시하도록 하기 위한 조건 &ndash;&gt;
-                <th:block th:if="${iterStat.index} == 2"></th:block>
-            </div>-->
-            <div class="grid-item">
-                <img th:src="${item.itemImgDtoList[0].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[0].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
-            </div>
-            <div class="grid-item">
-                <img th:src="${item.itemImgDtoList[1].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[1].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
-            </div>
-            <div class="grid-item">
-                <img th:src="${item.itemImgDtoList[2].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[2].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
-            </div>
-        </div>
-        <!-- //상단 : 대표 이미지 및 서브 이미지 -->
-
-
-        <div class="item-wrap">
-            <!-- 클래스 등록 내용 -->
-            <div class="item-inner">
-                <div class="item-header">
-                    <h3 th:text="${item.itemNm}"></h3>
-                    <!-- 카테고리 데이터 출력 -->
-                    <span th:each="type : ${T(com.lecture101.constant.Category).values()}"
-                          th:if="${item.Category == type}"
-                          th:text="${type.displayName}">
-                    </span>
-                    <!-- //카테고리 데이터 출력 -->
-                    <!-- 클래스 상태 출력
-                    <span th:each="type : ${T(com.lecture101.constant.ItemSellStatus).values()}"
-                          th:if="${item.ItemSellStatus == type}"
-                          th:text="${type.description}">
-                    </span>
-                     //클래스 상태 출력 -->
-                    <!-- 클래스 타입 출력 -->
-                    <span th:each="type : ${T(com.lecture101.constant.LectureType).values()}"
-                          th:if="${item.LectureType == type}"
-                          th:text="${type.description}">
-                    </span>
-                    <!-- //클래스 타입 출력 -->
-                </div>
-
-            </div>
-            <!-- //클래스 등록 내용 -->
-            <!-- asid : 캘린더 및 신청 버튼 -->
-            <div class="item-aside">
-                <!--달력 내용 추가한 시작 부분-->
-                <div id="calendar-widget">
-                    <h4>클래스 신청</h4>
-                    <div id="datepicker"></div>
-                </div>
-                <script>
-
-                    $(function() {
-
-                        var classStartDate = "[[${item.classStartDate}]]";
-                        var classEndDate = "[[${item.classEndDate}]]";
-
-                        var startDate = new Date(classStartDate);
-                        var endDate = new Date(classEndDate);
-
-
-
-
-                        $("#datepicker").datepicker({
-                            dateFormat: "yy-mm-dd",
-                            minDate: startDate,
-                            maxDate: endDate,
-                            onSelect: function(dateText) {
-
-                                $("#selected-date-display").text(dateText);
-                                /*alert("선택한 날짜: " + dateText);*/
-
-                            }
-                        });
-                    });
-                </script>
-                <!--달력 내용 추가한 끝 부분-->
-            </div>
-            <!-- //asid : 캘린더 및 신청 버튼 -->
-        </div>
-
 
     <div class="d-flex">
-
+        <div class="repImgDiv">
+            <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
+        </div>
         <div class="wd50">
+            <!-- 카테고리 데이터 출력 -->
+            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                 th:if="${item.Category == type}"
+                 th:text="${type.displayName}">
+            </div>
+            <!-- //카테고리 데이터 출력 -->
+            <!-- 클래스 상태 출력 -->
+            <span th:if="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+                강의중
+            </span>
+            <span th:unless="${item.itemSellStatus == T(com.lecture101.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
+                종료된 강의
+            </span>
+            <!-- //클래스 상태 출력 -->
+            <!-- 클래스 타입 출력 -->
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONE_TO_ONE}" class="badge badge-primary mgb-15">
+                1:1 강의
+            </span>
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).GROUP}" class="badge btn-danger mgb-15" >
+                그룹 강의
+            </span>
+            <span th:if="${item.lectureType == T(com.lecture101.constant.LectureType).ONLINE}" class="badge btn-danger mgb-15" >
+                온라인 강의
+            </span>
+                <!-- //클래스 타입 출력 -->
+                <!--lecture101_MK_ 파트 끝-->
 
+            <div class="h4" th:text="${item.itemNm}"></div>
+            <hr class="my-4">
 
             <div class="text-right">
                 <div class="h4 text-danger text-left">
@@ -404,7 +358,39 @@
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
     </div>
 
+    <!--달력 내용 추가한 시작 부분-->
+    <div id="calendar-widget">
+        <h3>클래스 일정</h3>
+        <div id="datepicker"></div>
 
+    </div>
+    <script>
+
+        $(function() {
+
+            var classStartDate = "[[${item.classStartDate}]]";
+            var classEndDate = "[[${item.classEndDate}]]";
+
+            var startDate = new Date(classStartDate);
+            var endDate = new Date(classEndDate);
+
+
+
+
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: startDate,
+                maxDate: endDate,
+                onSelect: function(dateText) {
+
+                    $("#selected-date-display").text(dateText);
+                    /*alert("선택한 날짜: " + dateText);*/
+
+                }
+            });
+        });
+    </script>
+    <!--달력 내용 추가한 끝 부분-->
     <!--현석 파트 끝-->
 
     <!--   1011  리뷰버튼추가 -->

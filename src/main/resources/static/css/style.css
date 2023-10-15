@@ -2,8 +2,33 @@
 /* common css
 /* --------------------------*/
 
+/*  reset */
+a {
+    color: #212529;
+}
+a:hover {
+    color: #000;
+}
+
+/* table */
+.inner-cont .table {
+    border-bottom: 2px solid #dee2e6;
+}
+.inner-cont .table thead td {
+    text-align: center;
+    background: #f5f5f5;
+}
+.inner-cont .table tbody td:first-child {
+    text-align: center;
+}
+.inner-cont .pagination {
+    margin: 40px 0;
+}
+
+
 /* Header */
 .header .navbar-brand {
+    font-family: 'Montserrat', 'Noto Sans KR', 맑은고딕, 'Dotum', 돋움, 'Arial', sans-serif;
     font-weight: 600;
 }
 
@@ -13,7 +38,7 @@
     width: 100%;
     padding: 0.8em 2em;
     background: rgba(0,0, 0, 0.8)!important;
-    z-index: 1;
+    z-index: 99;
 }
 
 
@@ -78,8 +103,10 @@
 }
 #vf3 {
     -webkit-animation-delay: -10s;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/visual4.jpg") ;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/visual6.jpg") ;
 }
+
+
 
 .visual-text {
     position: absolute;
@@ -98,7 +125,8 @@
 }
 
 .main-inner-cont {
-    margin: 60px 10% 0;
+    max-width: 1280px;
+    margin: 60px auto 0;
 }
 
 
@@ -107,7 +135,7 @@
     border: none;
 }
 .main-inner-cont .card-body {
-    padding: 10px 1rem 2rem;
+    padding: 1rem 1rem 2.5rem;
 }
 .main-inner-cont .card img {
     border-radius: 20px;
@@ -116,6 +144,7 @@
 .main-inner-cont .card-body .card-ctg {
     font-size: 0.9rem;
     margin-bottom: 8px;
+    color: #777;
 }
 .main-inner-cont .card-body .card-ctg span:first-child {
     margin-right: 10px;
@@ -127,6 +156,7 @@
     color: #bbb;
 }
 .main-inner-cont .card-body .card-title {
+    font-size: 1.3rem;
     color: #000;
     margin-bottom: 0.4rem;
 }
@@ -148,9 +178,95 @@
 
 /* sub layout */
 .inner-cont {
-    margin: 80px 10%;
-    border:1px solid red
+    max-width: 1200px;
+    margin: 120px auto 60px;
+    background-image: url("../images/visual1.jpg") ;
+}
+.inner-cont.member {
+    max-width: 600px;
 }
 .inner-cont h2 {
     margin-bottom: 20px;
 }
+
+.img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-auto-flow: dense;
+    align-content: stretch;
+    gap: 20px;
+    max-height: 520px;
+    margin-bottom: 30px;
+}
+.img-grid .grid-item {
+    position: relative;
+    align-self: stretch;
+    overflow: hidden;
+}
+/*.img-grid .grid-item > div {
+    position: relative;
+    height: auto;
+}*/
+.img-grid .grid-item img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: auto;
+}
+
+.img-grid .grid-item:first-child {
+    height: 520px;
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 2;
+    border-radius: 1.6rem 0 0 1.6rem;
+}
+.img-grid .grid-item:nth-child(2) {
+    border-radius: 0 1.6rem 0 0;
+}
+.img-grid .grid-item:nth-child(3) {
+    border-radius: 0 0 1.6rem 0;
+}
+
+/* 서브 상세 페이지 */
+.item-wrap {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-auto-flow: dense;
+    align-content: stretch;
+    gap: 20px;
+}
+.item-wrap .item-inner, .item-wrap .item-aside{
+    position: relative;
+    align-self: stretch;
+}
+
+.item-header {
+
+}
+.item-header span {
+    margin-right: 10px;
+}
+.item-header span:after {
+    content: '|';
+    padding-left: 9px;
+}
+
+.item-aside {
+    position: relative;
+}
+
+/*달력 내용 추가한 시작 부분*/
+#calendar-widget {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    padding: 2rem;
+    border-radius: 1.6rem;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+/*달력 내용 추가한 끝 부분*/
+
+
