@@ -33,4 +33,21 @@ public class ItemImg extends BaseEntity{
         this.imgUrl = imgUrl;
     }
 
+    /*private String filePath;
+
+    // 생성자
+    public void ItemImage() {
+        // 초기화 등의 작업을 수행할 수 있습니다.
+    }
+
+    // filePath 설정 메서드
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    // filePath 가져오기 메서드 (필요하다면)
+    public String getFilePath() {
+        return this.filePath;
+    }*/
+
 }

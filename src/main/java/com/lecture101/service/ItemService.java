@@ -48,6 +48,42 @@ public class ItemService {
 
         itemRepository.save(item);
 
+        // 이미지 등록
+        /*if (itemImgFileList.isEmpty()) {
+            ItemImg itemImg = new ItemImg();
+            itemImg.setItem(item);
+            itemImg.setRepimgYn("Y"); // 첫 번째 이미지를 대표 이미지로 설정
+
+            // 더미 이미지의 경로를 설정
+            itemImg.setFilePath("/images/noimg.jpg");
+
+            itemImgService.saveItemImg(itemImg, null); // 이미지 파일이 없으므로 두 번째 파라미터는 null로 전달
+        } else {
+            for (int i = 0; i < itemImgFileList.size(); i++) {
+                ItemImg itemImg = new ItemImg();
+                itemImg.setItem(item);
+
+                if (i == 0)
+                    itemImg.setRepimgYn("Y");
+                else
+                    itemImg.setRepimgYn("N");
+
+                MultipartFile imgFile = itemImgFileList.get(i);
+
+                if (imgFile.isEmpty()) {
+                    // 이미지가 업로드되지 않은 경우 더미 이미지를 사용
+                    itemImg.setFilePath("/images/noimg.jpg");
+                } else {
+                    // 이미지가 업로드된 경우 실제 파일을 저장하고 그 경로를 설정
+                    String filePath = "/images/item/" + imgFile.getOriginalFilename();
+                    // 여기에서 실제 파일을 저장하는 코드를 작성해야 합니다.
+                    itemImg.setFilePath(filePath);
+                }
+
+                itemImgService.saveItemImg(itemImg, imgFile);
+            }
+        }*/
+
         //이미지 등록
         for(int i=0;i<itemImgFileList.size();i++){
             ItemImg itemImg = new ItemImg();
