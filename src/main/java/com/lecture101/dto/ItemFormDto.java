@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.Size;
 
 @Getter @Setter
 public class ItemFormDto {
@@ -50,6 +51,7 @@ public class ItemFormDto {
     @NotNull(message = "클래스 타입은 필수 입력 값입니다.")
     private LectureType lectureType;
 
+    /*@Size(min = 3, message = "최소 3개의 이미지를 등록해야 합니다.") // 이미지는 최소 3개가 필요*/
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
     private List<Long> itemImgIds = new ArrayList<>();

@@ -62,6 +62,12 @@ public class ItemController {
             return "item/itemForm";
         }
 
+        /*//이미지 3개 등록
+        if(itemImgFileList.size() < 3) {
+            model.addAttribute("errorMessage", "이미지는 최소 3개가 필요합니다.");
+            return "item/itemForm";
+        }*/
+
         if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
             return "item/itemForm";

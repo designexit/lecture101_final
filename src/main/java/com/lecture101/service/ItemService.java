@@ -69,6 +69,10 @@ public class ItemService {
     }
 
     public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception{
+        /*// 이미지 파일이 3개가 아니면 예외를 던짐
+        if (itemImgFileList.size() != 3) {
+            throw new IllegalArgumentException("상품은 반드시 3개의 이미지를 포함해야 합니다.");
+        }*/
         //상품 수정
         Item item = itemRepository.findById(itemFormDto.getId())
                 .orElseThrow(EntityNotFoundException::new);

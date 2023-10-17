@@ -70,6 +70,8 @@ a:hover {
 
 /* footer */
 .footer {
+    /*position: fixed;
+    bottom: 0;*/
     background: #222;
     border: none;
 }
