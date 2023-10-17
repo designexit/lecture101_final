@@ -9,22 +9,25 @@ import com.lecture101.service.CommentService;
 import com.lecture101.service.ItemService;
 import com.lecture101.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,8 +100,10 @@ public class ItemController {
             return "item/itemForm";
         }
 
-        if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
-            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
+        /*if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
+            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");*/
+        if(itemImgFileList.size() < 3 || itemImgFileList.get(0).isEmpty() || itemImgFileList.get(2).isEmpty()){
+            model.addAttribute("errorMessage", "세 번째 상품 이미지는 필수 입력 값 입니다.");
             return "item/itemForm";
         }
 

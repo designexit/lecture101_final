@@ -22,7 +22,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+            _box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
         }
         th, td {
             padding: 10px;
@@ -40,13 +40,13 @@
         td:nth-child(2) {
             color: #555;
         }
-        td:nth-child(3) a {
+        /*td:nth-child(3) a {
             color: #007bff;
             text-decoration: none;
         }
         td:nth-child(3) a:hover {
             text-decoration: underline;
-        }
+        }*/
     </style>
 
 </head>
@@ -54,6 +54,45 @@
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
+
+        $('.btn-example').click(function () {
+            var $href = $(this).attr('href');
+            layer_popup($href);
+        });
+        function layer_popup(el) {
+
+            var $el = $(el); //레이어의 id를 $el 변수에 저장
+            var isDim = $el.prev().hasClass('dimBg'); //dimmed 레이어를 감지하기 위한 boolean 변수
+
+            isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+            var $elWidth = ~~$el.outerWidth(),
+                $elHeight = ~~$el.outerHeight(),
+                docWidth = $(document).width(),
+                docHeight = $(document).height();
+
+            // 화면의 중앙에 레이어를 띄운다.
+            if ($elHeight < docHeight || $elWidth < docWidth) {
+                $el.css({
+                    marginTop: -$elHeight / 2,
+                    marginLeft: -$elWidth / 2 });
+
+            } else {
+                $el.css({ top: 0, left: 0 });
+            }
+
+            $el.find('a.btn-layerClose').click(function () {
+                isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+                return false;
+            });
+
+            $('.layer .dimBg').click(function () {
+                $('.dim-layer').fadeOut();
+                return false;
+            });
+
+        }
+
 
         /*<![CDATA[*/
         var userName = /*[[${member.name}]]*/ 'defaultUserName'; // 사용자 이름
@@ -259,15 +298,15 @@
         <div class="img-grid">
             <div class="grid-item">
                 <img th:src="${item.itemImgDtoList[0].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[0].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
+                <!--<img th:unless="${item.itemImgDtoList[0].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">-->
             </div>
             <div class="grid-item">
                 <img th:src="${item.itemImgDtoList[1].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[1].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
+                <!--<img th:unless="${item.itemImgDtoList[1].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">-->
             </div>
             <div class="grid-item">
                 <img th:src="${item.itemImgDtoList[2].imgUrl}" th:alt="${item.itemNm}">
-                <img th:unless="${item.itemImgDtoList[2].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">
+                <!--<img th:unless="${item.itemImgDtoList[2].imgUrl != null}" src="/images/noimg.jpg" alt="이미지를 등록하세요.">-->
             </div>
         </div>
         <!-- //상단 : 대표 이미지 및 서브 이미지 -->
@@ -333,31 +372,20 @@
                                 </div>
                                 <button id="comment-write-btn" onclick="commentWrite()" class="btn btn-dark">댓글작성</button>
                             </div>
-                            <!--<div>
-                                <div id="comment-list_1">댓글</div>
-                                <ul id="comment-list">
-                                    <li th:each="comment : ${commentsPage.content}">
-                                        <span th:text="${comment.commentWriter}"></span>
-                                        <span th:text="${comment.commentContents}"></span>
-                                        &lt;!&ndash;로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정버튼 활성화&ndash;&gt;
-                                        <a th:if="${member != null and comment.commentWriter == member.name}"
-                                           th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
-                                        &lt;!&ndash; 로그인한 사용자와 댓글 작성자가 일치하면 삭제 버튼 표시 &ndash;&gt;
-                                        <a th:if="${member != null and comment.commentWriter == member.name}"
-                                           th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}"
-                                           class="btn btn-danger delete-comment"
-                                           data-comment-id="${comment.id}"
-                                           onclick="return confirmDelete()">삭제</a>
-                                    </li>
-                                </ul>
-                            </div>-->
-                            <table class="table">
+                            <table class="table center">
+                                <colgroup>
+                                    <col style="width:10%;">
+                                    <col style="width:30%;">
+                                    <col style="width:15%;">
+                                    <col style="width:15%;">
+                                </colgroup>
                                 <thead id="comment-list_1">
                                     <tr>
                                         <th>작성자</th>
                                         <th>내용</th>
                                         <th>작업</th>
                                         <th>작업</th>
+                                        <th>test</th>
                                     </tr>
                                 </thead>
                                 <tbody id="comment-list">
@@ -376,8 +404,8 @@
                                                class="btn btn-danger delete-comment"
                                                data-comment-id="${comment.id}"
                                                onclick="return confirmDelete()">삭제</a>
-
                                         </td>
+                                        <td><a href="#layer2" class="btn-example">pop</a> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -428,7 +456,7 @@
 
             </div>
             <!-- //클래스 등록 내용 -->
-            <!-- asid : 캘린더 및 신청 버튼 -->
+            <!-- aside : 캘린더 및 신청 버튼 -->
             <div class="item-aside">
                 <div class="item-aside-inner">
                     <div class="item-price row">
@@ -503,14 +531,35 @@
                     </div>
                 </div>
             </div>
-
-            <!-- //asid : 캘린더 및 신청 버튼 -->
+            <!-- //aside : 캘린더 및 신청 버튼 -->
         </div>
-
-
-
     </div>
 
 </div>
+
+<!-- modal -->
+
+
+<div class="dim-layer">
+    <div class="dimBg"></div>
+    <div id="layer2" class="pop-layer">
+        <div class="pop-container">
+            <div class="pop-conts">
+                <!--content //-->
+                <p class="ctxt mb20">Thank you.<br>
+                    Your registration was submitted successfully.<br>
+                    Selected invitees will be notified by e-mail on JANUARY 24th.<br><br>
+                    Hope to see you soon!
+                </p>
+
+                <div class="btn-r">
+                    <a href="#" class="btn-layerClose">Close</a>
+                </div>
+                <!--// content-->
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </html>

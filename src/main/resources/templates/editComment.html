@@ -1,17 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 <head>
     <meta charset="UTF-8">
     <title>Edit Comment</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .center-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content-box {
+            background-color: #fff;
+            padding: 2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 60%;
+            max-width: 600px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 1em;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Edit Comment</h1>
-<form action="/comment/update/{commentId}" method="post" th:object="${comment}" th:action="@{/comment/update/{commentId}(commentId=${comment.id})}" th:method="post">
-    <input type="hidden" th:field="*{id}">
-    <label for="commentContents">Comment:</label>
-    <textarea id="commentContents" th:field="*{commentContents}" required></textarea>
-    <button type="submit">Save</button>
-</form>
-<a href="/item/{itemId}">Cancel</a>
+<div layout:fragment="content">
+    <div class="center-wrapper">
+        <div class="content-box">
+            <h1>댓글 수정</h1>
+            <form action="/comment/update/{commentId}" method="post" th:object="${comment}" th:action="@{/comment/update/{commentId}(commentId=${comment.id})}" th:method="post">
+                <input type="hidden" th:field="*{id}">
+                <label for="commentContents">내용:</label>
+                <textarea id="commentContents" th:field="*{commentContents}" required></textarea>
+                <button type="submit">저장</button>
+            </form>
+            <a href="/item/{itemId}">취소</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
