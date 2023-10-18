@@ -58,13 +58,10 @@ a:hover {
     font-weight: 600;
 }
 
+/* 1018 수정 */
 .header .bg-primary {
-    position: fixed;
-    top:0;
-    width: 100%;
     padding: 0.8em 2em;
     background: rgba(0,0, 0, 0.8)!important;
-    z-index: 99;
 }
 
 
@@ -206,8 +203,8 @@ a:hover {
 /* 1018 수정 */
 .inner-cont {
     max-width: 1200px;
-    margin: 0 auto 0;
-    padding: 60px 0;
+    margin: 0px auto 0;
+    padding: 125px 0;
 }
 .inner-cont.member {
     max-width: 600px;
